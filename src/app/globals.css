@@ -23,3 +23,11 @@ body {
   color: var(--color-primary-text);
   font-family: var(--font-inter);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

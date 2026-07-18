@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const faqItems = [
   {
@@ -38,47 +39,46 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 px-6">
+    <section id="faq" className="py-24 px-6 bg-white">
       <div className="mx-auto max-w-[800px]">
-        <div className="text-center mb-16">
+        <AnimatedSection className="text-center mb-16">
           <h2 className="text-[32px] sm:text-[40px] font-semibold tracking-[-0.01em] text-primary-text mb-4">
             Часті питання
           </h2>
           <p className="text-lg text-muted-text">
             Відповіді на найпопулярніші запитання наших пацієнтів
           </p>
-        </div>
+        </AnimatedSection>
 
         <div className="space-y-3">
           {faqItems.map((item, index) => (
-            <div
-              key={index}
-              className="bg-ice-surface rounded-[16px] overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left"
-              >
-                <span className="font-medium text-primary-text pr-4">
-                  {item.question}
-                </span>
-                <ChevronDown
-                  size={20}
-                  className={`text-muted-text shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? "rotate-180" : ""
+            <AnimatedSection key={index} delay={index * 0.05}>
+              <div className="bg-ice-surface rounded-[16px] overflow-hidden hover:shadow-md transition-shadow duration-300">
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                >
+                  <span className="font-medium text-primary-text pr-4">
+                    {item.question}
+                  </span>
+                  <ChevronDown
+                    size={20}
+                    className={`text-muted-text shrink-0 transition-transform duration-300 ${
+                      openIndex === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openIndex === index ? "max-h-48 pb-6" : "max-h-0"
                   }`}
-                />
-              </button>
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? "max-h-48 pb-6" : "max-h-0"
-                }`}
-              >
-                <p className="px-6 text-muted-text leading-relaxed">
-                  {item.answer}
-                </p>
+                >
+                  <p className="px-6 text-muted-text leading-relaxed">
+                    {item.answer}
+                  </p>
+                </div>
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

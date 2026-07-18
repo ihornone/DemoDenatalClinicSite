@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sparkles,
   Heart,
@@ -6,6 +8,7 @@ import {
   ScanFace,
   Smile,
 } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const services = [
   {
@@ -48,52 +51,51 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 px-6">
+    <section id="services" className="py-24 px-6 bg-fog-surface">
       <div className="mx-auto max-w-[1200px]">
-        <div className="text-center mb-16">
+        <AnimatedSection className="text-center mb-16">
           <h2 className="text-[32px] sm:text-[40px] font-semibold tracking-[-0.01em] text-primary-text mb-4">
             Наші послуги
           </h2>
           <p className="text-lg text-muted-text max-w-[520px] mx-auto">
             Повний спектр стоматологічних послуг від профілактики до складних хірургічних втручань
           </p>
-        </div>
+        </AnimatedSection>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className="group bg-ice-surface rounded-[24px] overflow-hidden hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <service.icon size={20} className="text-teal" />
+          {services.map((service, i) => (
+            <AnimatedSection key={service.title} delay={i * 0.08}>
+              <div className="group bg-white rounded-[24px] overflow-hidden hover:shadow-xl hover:shadow-black/8 transition-all duration-300 hover:-translate-y-1.5 h-full">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+                    <service.icon size={20} className="text-teal" />
+                  </div>
+                </div>
+                <div className="p-8">
+                  <h3 className="text-xl font-semibold text-primary-text mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-text leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 text-teal font-medium text-sm hover:gap-3 transition-all"
+                  >
+                    Дізнатися більше
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </a>
                 </div>
               </div>
-              <div className="p-8">
-                <h3 className="text-xl font-semibold text-primary-text mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-muted-text leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 text-teal font-medium text-sm hover:gap-3 transition-all"
-                >
-                  Дізнатися більше
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

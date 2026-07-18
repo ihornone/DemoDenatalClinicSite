@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import TrustBlock from "@/components/TrustBlock";
 import Services from "@/components/Services";
 import Doctors from "@/components/Doctors";
 import BeforeAfter from "@/components/BeforeAfter";
@@ -13,6 +14,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <TrustBlock />
       <Services />
       <Doctors />
       <BeforeAfter />

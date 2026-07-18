@@ -16,6 +16,7 @@ const BREAKPOINT = 1000;
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= BREAKPOINT);
@@ -24,10 +25,23 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const closeMenu = () => setMobileOpen(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-border">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-slate-border"
+          : "bg-white/80 backdrop-blur-xl border-b border-slate-border"
+      }`}
+    >
       <nav className="mx-auto max-w-[1200px] flex items-center justify-between h-[72px] px-6">
         <a href="#" className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-full bg-teal flex items-center justify-center">
@@ -63,7 +77,7 @@ export default function Navbar() {
             </a>
             <a
               href="#contact"
-              className="bg-teal hover:bg-teal-dark text-white font-semibold text-sm rounded-full px-7 py-3 transition-colors"
+              className="bg-teal hover:bg-teal-dark text-white font-semibold text-sm rounded-full px-7 py-3 transition-all hover:shadow-lg hover:shadow-teal/25 hover:-translate-y-0.5 active:translate-y-0"
             >
               Записатися
             </a>

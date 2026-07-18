@@ -1,4 +1,7 @@
+"use client";
+
 import { Star } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const reviews = [
   {
@@ -29,44 +32,43 @@ const reviews = [
 
 export default function Reviews() {
   return (
-    <section id="reviews" className="py-24 px-6 bg-ice-surface">
+    <section id="reviews" className="py-24 px-6 bg-fog-surface">
       <div className="mx-auto max-w-[1200px]">
-        <div className="text-center mb-16">
+        <AnimatedSection className="text-center mb-16">
           <h2 className="text-[32px] sm:text-[40px] font-semibold tracking-[-0.01em] text-primary-text mb-4">
             Відгуки пацієнтів
           </h2>
           <p className="text-lg text-muted-text max-w-[520px] mx-auto">
-            Що кажуть наші пацієнти про свой досвід
+            Що кажуть наші пацієнти про свій досвід
           </p>
-        </div>
+        </AnimatedSection>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {reviews.map((review) => (
-            <div
-              key={review.name}
-              className="bg-white rounded-[24px] p-8 md:p-10"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <img
-                  src={review.image}
-                  alt={review.name}
-                  className="w-14 h-14 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-primary-text">
-                    {review.name}
-                  </h4>
-                  <div className="flex gap-0.5 mt-1">
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star key={i} size={14} className="fill-teal text-teal" />
-                    ))}
+          {reviews.map((review, i) => (
+            <AnimatedSection key={review.name} delay={i * 0.08}>
+              <div className="bg-white rounded-[24px] p-8 md:p-10 hover:shadow-xl hover:shadow-black/8 transition-all duration-300 hover:-translate-y-1 h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <img
+                    src={review.image}
+                    alt={review.name}
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-primary-text">
+                      {review.name}
+                    </h4>
+                    <div className="flex gap-0.5 mt-1">
+                      {Array.from({ length: review.rating }).map((_, i) => (
+                        <Star key={i} size={14} className="fill-teal text-teal" />
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <p className="text-muted-text leading-relaxed">
+                  &ldquo;{review.text}&rdquo;
+                </p>
               </div>
-              <p className="text-muted-text leading-relaxed">
-                &ldquo;{review.text}&rdquo;
-              </p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

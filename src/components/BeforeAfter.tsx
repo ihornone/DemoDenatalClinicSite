@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const cases = [
   {
@@ -29,64 +30,111 @@ const cases = [
 
 export default function BeforeAfter() {
   const [active, setActive] = useState(0);
+  const [sliderPos, setSliderPos] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
 
   const next = () => setActive((prev) => (prev + 1) % cases.length);
   const prev = () => setActive((prev) => (prev - 1 + cases.length) % cases.length);
 
+  const handleMove = useCallback((clientX: number) => {
+    if (!containerRef.current || !isDragging.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const pct = Math.max(5, Math.min(95, (x / rect.width) * 100));
+    setSliderPos(pct);
+  }, []);
+
+  const handleMouseDown = () => { isDragging.current = true; };
+  const handleMouseUp = () => { isDragging.current = false; };
+  const handleMouseMove = (e: React.MouseEvent) => handleMove(e.clientX);
+  const handleTouchMove = (e: React.TouchEvent) => handleMove(e.touches[0].clientX);
+
   const current = cases[active];
 
   return (
-    <section id="results" className="py-24 px-6">
+    <section id="results" className="py-24 px-6 bg-ice-surface">
       <div className="mx-auto max-w-[1200px]">
-        <div className="text-center mb-16">
+        <AnimatedSection className="text-center mb-16">
           <h2 className="text-[32px] sm:text-[40px] font-semibold tracking-[-0.01em] text-primary-text mb-4">
             До та після
           </h2>
           <p className="text-lg text-muted-text max-w-[520px] mx-auto">
             Реальні результати наших пацієнтів
           </p>
-        </div>
+        </AnimatedSection>
 
-        <div className="bg-ice-surface rounded-[24px] overflow-hidden">
-          <div className="grid md:grid-cols-2">
-            <div className="relative h-80 md:h-[480px]">
-              <img
-                src={current.before}
-                alt="До лікування"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm text-primary-text font-semibold text-sm rounded-full px-4 py-2">
-                До
-              </div>
-            </div>
-            <div className="relative h-80 md:h-[480px]">
+        <AnimatedSection>
+          <div className="bg-white rounded-[24px] overflow-hidden shadow-sm">
+            <div
+              ref={containerRef}
+              className="relative h-80 md:h-[480px] cursor-ew-resize select-none overflow-hidden"
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              onTouchStart={handleMouseDown}
+              onTouchEnd={handleMouseUp}
+              onTouchMove={handleTouchMove}
+            >
+              {/* After (full width) */}
               <img
                 src={current.after}
                 alt="Після лікування"
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute top-6 left-6 bg-teal text-white font-semibold text-sm rounded-full px-4 py-2">
+              {/* Before (clipped) */}
+              <div
+                className="absolute inset-0 overflow-hidden"
+                style={{ width: `${sliderPos}%` }}
+              >
+                <img
+                  src={current.before}
+                  alt="До лікування"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ width: containerRef.current ? `${containerRef.current.offsetWidth}px` : "100vw" }}
+                />
+              </div>
+
+              {/* Slider line */}
+              <div
+                className="absolute top-0 bottom-0 w-0.5 bg-white z-10"
+                style={{ left: `${sliderPos}%` }}
+              >
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 4l-6 8 6 8M16 4l6 8-6 8" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Labels */}
+              <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm text-primary-text font-semibold text-sm rounded-full px-4 py-2 z-20">
+                До
+              </div>
+              <div className="absolute top-6 right-6 bg-teal text-white font-semibold text-sm rounded-full px-4 py-2 z-20">
                 Після
               </div>
             </div>
+
+            <div className="p-8 md:p-12">
+              <h3 className="text-2xl font-semibold text-primary-text mb-3">
+                {current.title}
+              </h3>
+              <p className="text-muted-text leading-relaxed mb-4 max-w-[560px]">
+                {current.description}
+              </p>
+              <p className="text-sm text-teal font-medium">
+                {current.doctor}
+              </p>
+            </div>
           </div>
-          <div className="p-8 md:p-12">
-            <h3 className="text-2xl font-semibold text-primary-text mb-3">
-              {current.title}
-            </h3>
-            <p className="text-muted-text leading-relaxed mb-4 max-w-[560px]">
-              {current.description}
-            </p>
-            <p className="text-sm text-teal font-medium">
-              {current.doctor}
-            </p>
-          </div>
-        </div>
+        </AnimatedSection>
 
         <div className="flex items-center justify-center gap-4 mt-8">
           <button
             onClick={prev}
-            className="w-12 h-12 rounded-full border-[1.5px] border-primary-text flex items-center justify-center hover:bg-primary-text hover:text-white transition-all"
+            className="w-12 h-12 rounded-full border-[1.5px] border-primary-text flex items-center justify-center hover:bg-primary-text hover:text-white transition-all hover:-translate-y-0.5"
             aria-label="Previous case"
           >
             <ChevronLeft size={20} />
@@ -105,7 +153,7 @@ export default function BeforeAfter() {
           </div>
           <button
             onClick={next}
-            className="w-12 h-12 rounded-full border-[1.5px] border-primary-text flex items-center justify-center hover:bg-primary-text hover:text-white transition-all"
+            className="w-12 h-12 rounded-full border-[1.5px] border-primary-text flex items-center justify-center hover:bg-primary-text hover:text-white transition-all hover:-translate-y-0.5"
             aria-label="Next case"
           >
             <ChevronRight size={20} />
