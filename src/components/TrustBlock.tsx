@@ -44,21 +44,25 @@ const stats = [
     value: 7000,
     suffix: "+",
     label: "пацієнтів",
+    description: "довірили нам свою посмішку",
   },
   {
     value: 15,
     suffix: "+",
     label: "років досвіду",
+    description: "надаємо якісну допомогу",
   },
   {
     value: 98,
     suffix: "%",
     label: "рекомендують",
+    description: "своїм друзям та рідним",
   },
   {
     value: 30,
     suffix: "+",
     label: "лікарів",
+    description: "сертифікованих спеціалістів",
   },
 ];
 
@@ -84,11 +88,14 @@ export default function TrustBlock() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} className="text-center group">
                 <div className="text-[32px] md:text-[40px] font-bold text-primary-text leading-tight">
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </div>
-                <p className="text-sm text-muted-text mt-1">{stat.label}</p>
+                <p className="text-sm font-medium text-primary-text mt-1">{stat.label}</p>
+                <p className="text-xs text-muted-text mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {stat.description}
+                </p>
               </div>
             ))}
           </div>

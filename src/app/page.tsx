@@ -4,6 +4,7 @@ import TrustBlock from "@/components/TrustBlock";
 import Services from "@/components/Services";
 import Doctors from "@/components/Doctors";
 import BeforeAfter from "@/components/BeforeAfter";
+import TreatmentProcess from "@/components/TreatmentProcess";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
@@ -18,6 +19,7 @@ export default function Home() {
       <Services />
       <Doctors />
       <BeforeAfter />
+      <TreatmentProcess />
       <Reviews />
       <FAQ />
       <Contact />

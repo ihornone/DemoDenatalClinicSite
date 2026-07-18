@@ -1,4 +1,4 @@
-import { Heart, Phone, Mail, MapPin } from "lucide-react";
+import { Heart, Phone, Mail, MapPin, Star, Award, Shield } from "lucide-react";
 
 const quickLinks = [
   { label: "Послуги", href: "#services" },
@@ -8,9 +8,45 @@ const quickLinks = [
   { label: "FAQ", href: "#faq" },
 ];
 
+const partners = [
+  { name: "Straumann", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Straumann_Logo.svg/200px-Straumann_Logo.svg.png" },
+  { name: "Invisalign", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Invisalign_logo.svg/200px-Invisalign_logo.svg.png" },
+  { name: "Nobel Biocare", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Nobel_Biocare_logo.svg/200px-Nobel_Biocare_logo.svg.png" },
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-primary-text text-white">
+    <footer className="bg-slate-900 text-white">
+      {/* Google Reviews Banner */}
+      <div className="bg-gradient-to-r from-teal to-teal-dark py-6">
+        <div className="mx-auto max-w-[1200px] px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} size={20} className="fill-white text-white" />
+                ))}
+              </div>
+              <div>
+                <p className="text-2xl font-bold">4.9</p>
+                <p className="text-sm text-white/80">Google Reviews</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <p className="text-white/80">326 відгуків</p>
+              <a
+                href="https://g.page/smiledesign/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-teal font-semibold text-sm rounded-full px-6 py-3 hover:bg-white/90 transition-colors"
+              >
+                Залишити відгук
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-[1200px] px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Logo & About */}
@@ -26,9 +62,34 @@ export default function Footer() {
                 SmileDesign
               </span>
             </div>
-            <p className="text-sm text-white/60 leading-relaxed max-w-[260px]">
+            <p className="text-sm text-white/60 leading-relaxed max-w-[260px] mb-6">
               Преміальна стоматологічна клініка у серці Києва. Створюємо посмішки, якими пишаються.
             </p>
+            
+            {/* Partners */}
+            <div className="mb-6">
+              <p className="text-xs text-white/40 uppercase tracking-wider mb-3">Партнери</p>
+              <div className="flex flex-wrap gap-3">
+                {partners.map((partner) => (
+                  <div key={partner.name} className="bg-white/10 rounded-lg px-3 py-2">
+                    <p className="text-xs font-medium text-white/70">{partner.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Licenses */}
+            <div>
+              <p className="text-xs text-white/40 uppercase tracking-wider mb-3">Ліцензії</p>
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <Shield size={14} className="text-teal" />
+                <span>Ліцензія МОЗ України</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-white/60 mt-2">
+                <Award size={14} className="text-teal" />
+                <span>ISO 9001:2015</span>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -84,7 +145,7 @@ export default function Footer() {
             </h4>
             <div className="flex gap-3 mb-6">
               {/* Instagram */}
-              <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
+              <a href="https://instagram.com/smiledesign" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                   <circle cx="12" cy="12" r="5" />
@@ -92,13 +153,13 @@ export default function Footer() {
                 </svg>
               </a>
               {/* Facebook */}
-              <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
+              <a href="https://facebook.com/smiledesign" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
               </a>
               {/* Telegram */}
-              <a href="#" aria-label="Telegram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
+              <a href="https://t.me/smiledesign" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m22 2-7 20-4-9-9-4z" />
                   <path d="M22 2 11 13" />

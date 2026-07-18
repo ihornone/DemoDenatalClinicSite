@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, GraduationCap } from "lucide-react";
+import { Award, GraduationCap, Star, TrendingUp } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 const doctors = [
@@ -9,6 +9,8 @@ const doctors = [
     role: "Головний лікар-стоматолог",
     experience: "15 років досвіду",
     certificates: "Certified Invisalign Provider",
+    rating: 4.9,
+    procedures: 2500,
     image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80",
   },
   {
@@ -16,6 +18,8 @@ const doctors = [
     role: "Хірург-імплантолог",
     experience: "12 років досвіду",
     certificates: "ITI Member, Straumann",
+    rating: 4.8,
+    procedures: 1800,
     image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
   },
   {
@@ -23,6 +27,8 @@ const doctors = [
     role: "Ортодонт",
     experience: "10 років досвіду",
     certificates: "Асоціація ортодонтів України",
+    rating: 4.9,
+    procedures: 1500,
     image: "https://images.unsplash.com/photo-1594824476967-48c8b964ac31?w=600&q=80",
   },
   {
@@ -30,6 +36,8 @@ const doctors = [
     role: "Терапевт-ендодонт",
     experience: "8 років досвіду",
     certificates: "Mikroskop-асистована терапія",
+    rating: 4.7,
+    procedures: 1200,
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&q=80",
   },
 ];
@@ -55,11 +63,15 @@ export default function Doctors() {
                   <img
                     src={doctor.image}
                     alt={doctor.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg">
+                    <Star size={14} className="fill-amber-400 text-amber-400" />
+                    <span className="text-sm font-semibold text-primary-text">{doctor.rating}</span>
+                  </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold text-primary-text mb-1">
+                  <h3 className="text-lg font-semibold text-primary-text mb-1 group-hover:text-teal transition-colors duration-300">
                     {doctor.name}
                   </h3>
                   <p className="text-teal font-medium text-sm mb-3">
@@ -69,9 +81,13 @@ export default function Doctors() {
                     <GraduationCap size={14} />
                     {doctor.experience}
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-text">
+                  <div className="flex items-center gap-2 text-sm text-muted-text mb-3">
                     <Award size={14} />
                     {doctor.certificates}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm font-medium text-teal bg-teal/10 rounded-full px-3 py-1.5">
+                    <TrendingUp size={14} />
+                    {doctor.procedures.toLocaleString("uk-UA")} процедур
                   </div>
                 </div>
               </div>

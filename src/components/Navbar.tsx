@@ -71,8 +71,10 @@ export default function Navbar() {
 
         {isDesktop && (
           <div className="flex items-center gap-5">
-            <a href="tel:+380441234567" className="flex items-center gap-2 text-sm font-medium text-primary-text hover:text-teal transition-colors">
-              <Phone size={16} />
+            <a href="tel:+380441234567" className="flex items-center gap-2.5 text-base font-semibold text-primary-text hover:text-teal transition-colors">
+              <div className="w-9 h-9 rounded-full bg-teal/10 flex items-center justify-center">
+                <Phone size={18} className="text-teal" />
+              </div>
               +380 44 123 45 67
             </a>
             <a
@@ -108,8 +110,10 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a href="tel:+380441234567" className="flex items-center gap-2 text-sm font-medium text-primary-text">
-              <Phone size={16} />
+            <a href="tel:+380441234567" className="flex items-center gap-2.5 text-base font-semibold text-primary-text">
+              <div className="w-9 h-9 rounded-full bg-teal/10 flex items-center justify-center">
+                <Phone size={18} className="text-teal" />
+              </div>
               +380 44 123 45 67
             </a>
             <a
